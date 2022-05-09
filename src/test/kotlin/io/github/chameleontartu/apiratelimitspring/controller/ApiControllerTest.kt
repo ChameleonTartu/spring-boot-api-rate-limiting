@@ -23,6 +23,9 @@ internal class ApiControllerTest {
 
         const val OK_STATUS_CODE = 200
         const val TOO_MANY_REQUESTS_STATUS_CODE = 429
+
+        const val UNBOUND_URL = "unbound"
+        const val UNBOUND_RESPONSE = "unbound"
     }
 
     @Test
@@ -56,5 +59,15 @@ internal class ApiControllerTest {
         pingResponse = restTemplate.getForEntity("$BASE_URL/$PING_URL", String::class.java)
         assertEquals(PING_RESPONSE, pingResponse.body)
         assertEquals(OK_STATUS_CODE, pingResponse.statusCode.value())
+    }
+
+    @Test
+    fun `should show that endpoint is unbound`() {
+        var unboundResponse: ResponseEntity<String>
+        for (i in 1 .. 1000) {
+            unboundResponse = restTemplate.getForEntity("$BASE_URL/$UNBOUND_URL", String::class.java)
+            assertEquals(UNBOUND_RESPONSE, unboundResponse.body)
+            assertEquals(OK_STATUS_CODE, unboundResponse.statusCode.value())
+        }
     }
 }

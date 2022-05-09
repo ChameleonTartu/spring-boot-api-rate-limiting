@@ -18,4 +18,9 @@ class ApiController {
     fun rarePing(): String {
         return "pong"
     }
+    
+    @GetMapping("/unbound")
+    fun unbound(): String {
+        return "unbound"
+    }
 }
