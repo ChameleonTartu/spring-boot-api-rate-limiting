@@ -20,4 +20,4 @@ jobs:
         with:
           distribution: ${{ matrix.distribution }}
           java-version: ${{ matrix.java }}
-      - run: mvn clean install
+      - run: mvn -q clean install
