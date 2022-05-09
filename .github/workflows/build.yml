@@ -1,0 +1,23 @@
+name: Build Action
+
+on:
+  push:
+  workflow_dispatch: # Allow for running this manually.
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    name: Build
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        java: [ 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 ]
+        distribution: [ 'zulu' ]
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          distribution: ${{ matrix.distribution }}
+          java-version: ${{ matrix.java }}
+      - run: mvn clean install
